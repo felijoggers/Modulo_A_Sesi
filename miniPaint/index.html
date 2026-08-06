@@ -1,50 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Paint</title>
     <style>
-        body{
+        body {
             text-align: center;
             font-family: Arial, Helvetica, sans-serif;
+        
         }
-        canvas{
+
+        canvas {
             border: 2px solid black;
             cursor: crosshair;
         }
+        button {
+            padding: 10px 10px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+
+        }
     </style>
 </head>
+
 <body>
     <h1>Mini Paint</h1>
-    <input type = "color" id = "cor">
-    <button id = "Limpar" >Limpar</button>
+    <input type="color" id="cor">
+    <button id="limpar">Clear</button>
+    <button id="exportar">Exportar</button>
     <br>
     <br>
-    <canvas id = "tela" width = "600" height = "400"> </canvas>
+    <canvas id="tela" width="600" height="400"></canvas>
 
     <script>
         const tela = document.getElementById("tela");
         const ctx = tela.getContext("2d");
-
         let desenhando = false;
+        ctx.fillStyle = "white"; 
+        ctx.fillRect(0, 0, tela.width, tela.height);
 
-        tela.onmousedown = () => desenhando = true;
+        tela.onmousedown = (e) => {
+            desenhando = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+
+        };
+
         tela.onmouseup = () => desenhando = false;
 
-
-        tela.onmousemove =  e => {
+        tela.onmousemove = e => {
             if (!desenhando) return;
-
-            ctx.strokeStyle = cor.valeu;
+            ctx.strokeStyle = cor.value;
             ctx.lineTo(e.offsetX, e.offsetY);
             ctx.stroke();
-
-            limpar.onclick = () =>
-            ctx.clearRect(0, 0, tela.Width, tela.Height);
-
-            //Desafio Criar função de exportar e orrigir os erros completamente
         }
+
+        limpar.onclick = () => {
+            ctx.clearRect(0, 0, tela.width, tela.height);
+            ctx.beginPath();
+        }
+        exportar.onclick = () => {
+            const link = document.createElement("a");
+            link.download = "MiniPaint.png";
+            link.href = tela.toDataURL();
+            link.click();
+        } 
     </script>
 </body>
 </html>

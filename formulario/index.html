@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Validação</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <div class="container">
     <form>
 
 
          
         <input type="text" id="nome" placeholder="Nome">
-        <p id="errorname"></p>
+        <p id="errorName"></p>
 
         <input type="email" id="email" placeholder="Email">
-        <p id="erroremail"></p>
+        <p id="errorEmail"></p>
 
-        <input type="password" id="password' placeholder="Senha">
-        <p id="errorsenha"></p>
+        <input type="password" id="senha" placeholder="Senha">
+        <p id="errorSenha"></p>
 
-        <button id="botao" disabled>Enviar</button>
+        <button id="botao" >Enviar</button>
 
     </form>
 
@@ -34,7 +35,47 @@
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const regexSenha = /^(?=.*[a-zA-Z])(?=.*[\w_]).{8,}$/;
 
-    </script>
+        // Função para validar formulário
+        function validar(){
 
+            let valido = true;
+
+            // Validação campo nome
+            if(nome.value == ""){
+                errorNme.innerText= "Nome Obrigatório";
+                valido = false;
+            }
+            else{
+                errorName.innerText = "";
+            }
+
+            //Validação do campo email
+            if(!regexEmail.test(email.value)){
+                errorEmail.innerText = "Email Inválido";
+                valido = false;
+            }
+            else{
+                errorEmail.innerText = "";
+            }
+
+            //Desafio: Criar validação do campo senha
+            if(!regexEmail.test(senha.value)){
+                errorSenha.innerText = "Senha Inválida";
+                valido = false;
+            }
+            else{
+                errorSenha.innerText = "";
+            }
+
+
+            botao.disabled = !valido;
+        }
+
+        nome.addEventlistener("input", validar);
+        email.addEventlistener("input", validar);
+        senha.addEventlistener("input", validar);
+
+    </script>
+</div>
 </body>
 </html>
